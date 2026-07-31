@@ -639,19 +639,163 @@ dialog#project {
   box-shadow: 0 0.7rem 1.8rem rgba(22, 20, 26, 0.12);
 }
 .project-brief {
-  max-width: none;
+  max-width: 1120px;
 }
-.brief-pages {
-  display: grid;
-  gap: 1rem;
-}
-.brief-pages img {
-  display: block;
-  width: 100%;
-  height: auto;
+.brief-content {
+  max-width: 1040px;
+  padding: clamp(1.1rem, 2.5vw, 2.4rem);
   border: 1px solid rgba(110, 61, 132, 0.18);
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 0.7rem 1.8rem rgba(22, 20, 26, 0.08);
+  color: #28242d;
+}
+.brief-content h4 {
+  margin: 2.4rem 0 1rem;
+  color: var(--purple);
+  font: 700 clamp(1.3rem, 2vw, 1.65rem)/1.25 Georgia, serif;
+}
+.brief-content h4:first-child {
+  margin-top: 0;
+}
+.brief-content h5 {
+  margin: 1.65rem 0 0.65rem;
+  color: #42334a;
+  font: 700 1.05rem/1.35 system-ui, sans-serif;
+}
+.brief-content p,
+.brief-content li {
+  max-width: 82ch;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+.brief-content p {
+  margin: 0 0 0.95rem;
+}
+.brief-content .brief-title {
+  max-width: 30ch;
+  margin: 0 0 0.35rem;
+  color: #2e1839;
+  font: 700 clamp(1.5rem, 3vw, 2.15rem)/1.18 Georgia, serif;
+}
+.brief-content .brief-subtitle {
+  margin-bottom: 2rem;
+  color: var(--purple);
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+.brief-content .fact-list {
+  display: grid;
+  grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid rgba(110, 61, 132, 0.16);
+}
+.brief-content .fact-list dt,
+.brief-content .fact-list dd {
+  margin: 0;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(110, 61, 132, 0.16);
+}
+.brief-content .fact-list dt {
+  padding-right: 1rem;
+  color: #50365c;
+  font-weight: 700;
+}
+.brief-content .fact-list dd {
+  line-height: 1.55;
+}
+.brief-flow {
+  max-width: 780px;
+  margin: 1.2rem 0 1.7rem;
+  padding: 1.1rem 1.25rem;
+  border-left: 4px solid rgba(110, 61, 132, 0.55);
+  background: rgba(110, 61, 132, 0.055);
+  text-align: center;
+}
+.brief-flow p {
+  max-width: none;
+  margin: 0;
+}
+.brief-flow .arrow {
+  color: var(--purple);
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+.research-questions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.1rem 0;
+}
+.research-questions > div {
+  padding: 1rem;
+  border: 1px solid rgba(110, 61, 132, 0.18);
+  border-radius: 0.4rem;
   background: #fff;
-  box-shadow: 0 0.7rem 1.8rem rgba(22, 20, 26, 0.1);
+}
+.research-questions strong,
+.research-questions span {
+  display: block;
+}
+.research-questions strong {
+  color: var(--purple);
+}
+.research-questions span {
+  margin-top: 0.45rem;
+  line-height: 1.45;
+}
+.brief-table-wrap {
+  margin: 1rem 0 1.8rem;
+  overflow-x: auto;
+  border: 1px solid rgba(110, 61, 132, 0.2);
+  border-radius: 0.5rem;
+  background: #fff;
+}
+.brief-content table {
+  width: 100%;
+  min-width: 1120px;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+.brief-content th,
+.brief-content td {
+  padding: 0.7rem;
+  border-right: 1px solid rgba(110, 61, 132, 0.16);
+  border-bottom: 1px solid rgba(110, 61, 132, 0.16);
+  vertical-align: top;
+  text-align: left;
+}
+.brief-content th {
+  background: #eee7f1;
+  color: #382042;
+}
+.brief-content tbody tr:nth-child(even) td {
+  background: #faf8fb;
+}
+.brief-content td:first-child {
+  width: 9rem;
+  color: #50365c;
+  font-weight: 700;
+}
+.brief-content td[colspan] {
+  background: #f7f3f8;
+}
+.brief-content td p {
+  margin: 0 0 0.35rem;
+  font-size: inherit;
+  line-height: inherit;
+}
+.brief-content td p:last-child {
+  margin-bottom: 0;
+}
+.brief-content .references {
+  margin: 0;
+  padding-left: 1.3rem;
+}
+.brief-content .references li {
+  margin-bottom: 0.75rem;
 }
 @media (max-width: 760px) {
   .map-heading h2,
@@ -682,7 +826,20 @@ dialog#project {
   .gallery-arrow {
     display: none;
   }
-  .brief-pages {
-    gap: 0.65rem;
+  .brief-content {
+    padding: 1rem;
+  }
+  .brief-content .fact-list {
+    grid-template-columns: 1fr;
+  }
+  .brief-content .fact-list dt {
+    padding-bottom: 0.15rem;
+    border-bottom: 0;
+  }
+  .brief-content .fact-list dd {
+    padding-top: 0;
+  }
+  .research-questions {
+    grid-template-columns: 1fr;
   }
 }

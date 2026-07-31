@@ -18,12 +18,7 @@ const P = {
     ],
     video: "finland-workshop.mp4",
     meta: "<strong>Partners & Academic Context:</strong> Universidade Aberta, University of Minho, UNESCO Chair and UNITWIN Network “The City that Educates and Transforms”, prospective Finnish higher-education partners.",
-    briefPages: [
-      "finland-brief-page-1.png",
-      "finland-brief-page-2.png",
-      "finland-brief-page-3.png",
-      "finland-brief-page-4.png",
-    ],
+    briefTemplate: "finland-brief",
   },
   macau: {
     place: "Macau",
@@ -153,17 +148,13 @@ function projectHtml(p) {
         </video>
       </section>`
     : "";
-  const brief = p.briefPages
+  const briefContent = p.briefTemplate
+    ? document.querySelector(`#${p.briefTemplate}`)?.innerHTML || ""
+    : "";
+  const brief = briefContent
     ? `<section class="project-brief" aria-labelledby="brief-title">
         <h3 id="brief-title">Research and Workshop Project Brief</h3>
-        <div class="brief-pages">
-          ${p.briefPages
-            .map(
-              (file, index) =>
-                `<img src="assets/documents/${file}" alt="Project brief, page ${index + 1} of ${p.briefPages.length}" loading="lazy">`,
-            )
-            .join("")}
-        </div>
+        <div class="brief-content">${briefContent}</div>
       </section>`
     : "";
   const className = p.className ? ` ${p.className}` : "";
