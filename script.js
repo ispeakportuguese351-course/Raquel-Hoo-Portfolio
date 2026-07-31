@@ -18,9 +18,11 @@ const P = {
     ],
     video: "finland-workshop.mp4",
     meta: "<strong>Partners & Academic Context:</strong> Universidade Aberta, University of Minho, UNESCO Chair and UNITWIN Network “The City that Educates and Transforms”, prospective Finnish higher-education partners.",
-    document: [
-      "Download the project brief",
-      "assets/documents/finland-project-brief.docx",
+    briefPages: [
+      "finland-brief-page-1.png",
+      "finland-brief-page-2.png",
+      "finland-brief-page-3.png",
+      "finland-brief-page-4.png",
     ],
   },
   macau: {
@@ -126,15 +128,19 @@ function projectHtml(p) {
   const gallery = p.gallery
     ? `<section class="project-gallery" aria-labelledby="gallery-title">
         <h3 id="gallery-title">Workshop environment</h3>
-        <div class="gallery-grid">
-          ${p.gallery
-            .map(
-              ([file, alt], index) =>
-                `<a href="assets/images/${file}" target="_blank" rel="noopener" class="gallery-item gallery-item--${index + 1}">
-                  <img src="assets/images/${file}" alt="${alt}" loading="lazy">
-                </a>`,
-            )
-            .join("")}
+        <div class="gallery-carousel">
+          <button class="gallery-arrow gallery-arrow--previous" type="button" data-gallery-scroll="-1" aria-label="Previous workshop images">‹</button>
+          <div class="gallery-track">
+            ${p.gallery
+              .map(
+                ([file, alt]) =>
+                  `<a href="assets/images/${file}" target="_blank" rel="noopener" class="gallery-item">
+                    <img src="assets/images/${file}" alt="${alt}" loading="lazy">
+                  </a>`,
+              )
+              .join("")}
+          </div>
+          <button class="gallery-arrow gallery-arrow--next" type="button" data-gallery-scroll="1" aria-label="Next workshop images">›</button>
         </div>
       </section>`
     : "";
@@ -147,14 +153,21 @@ function projectHtml(p) {
         </video>
       </section>`
     : "";
-  const document = p.document
-    ? `<div class="document-download">
-        <a href="${p.document[1]}" download>${p.document[0]} <span aria-hidden="true">↓</span></a>
-        <small>Editable Word document</small>
-      </div>`
+  const brief = p.briefPages
+    ? `<section class="project-brief" aria-labelledby="brief-title">
+        <h3 id="brief-title">Research and Workshop Project Brief</h3>
+        <div class="brief-pages">
+          ${p.briefPages
+            .map(
+              (file, index) =>
+                `<img src="assets/documents/${file}" alt="Project brief, page ${index + 1} of ${p.briefPages.length}" loading="lazy">`,
+            )
+            .join("")}
+        </div>
+      </section>`
     : "";
   const className = p.className ? ` ${p.className}` : "";
-  return `<article class="project${className}"${image}><p class="kicker">${p.place}</p><p class="date">${p.date}</p><h2>${p.title}</h2><p class="sub">${p.sub}</p><div class="copy"><p>${p.copy}</p></div>${gallery}${video}${audio}${links}<p class="meta">${p.meta}</p>${document}</article>`;
+  return `<article class="project${className}"${image}><p class="kicker">${p.place}</p><p class="date">${p.date}</p><h2>${p.title}</h2><p class="sub">${p.sub}</p><div class="copy"><p>${p.copy}</p></div>${gallery}${video}${audio}${links}<p class="meta">${p.meta}</p>${brief}</article>`;
 }
 document.querySelectorAll("[data-project]").forEach((button) => {
   button.addEventListener("click", () => {
@@ -165,6 +178,17 @@ document.querySelectorAll("[data-project]").forEach((button) => {
 document
   .querySelector("[data-close]")
   .addEventListener("click", () => D.close());
+C.addEventListener("click", (event) => {
+  const arrow = event.target.closest("[data-gallery-scroll]");
+  if (!arrow) return;
+  const track = arrow
+    .closest(".gallery-carousel")
+    .querySelector(".gallery-track");
+  track.scrollBy({
+    left: Number(arrow.dataset.galleryScroll) * track.clientWidth * 0.82,
+    behavior: "smooth",
+  });
+});
 const CD = document.querySelector("#contact");
 document.querySelectorAll("[data-contact]").forEach((button) => {
   button.addEventListener("click", () => CD.showModal());

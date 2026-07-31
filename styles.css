@@ -541,7 +541,11 @@ dialog#project {
   max-width: 760px;
 }
 .project--finland::before {
+  inset: 0 0 auto;
+  height: 720px;
   background-position: right center;
+  background-size: auto 100%;
+  background-color: var(--paper);
   opacity: 0.76;
 }
 .project--finland::after {
@@ -555,36 +559,46 @@ dialog#project {
   );
 }
 .project-gallery,
-.project-video {
+.project-video,
+.project-brief {
   position: relative;
   z-index: 1;
   max-width: 1120px;
   margin-top: 2.2rem;
 }
 .project-gallery h3,
-.project-video h3 {
+.project-video h3,
+.project-brief h3 {
   margin: 0 0 0.85rem;
   color: var(--purple);
   font: 1.25rem Georgia, serif;
 }
-.gallery-grid {
+.gallery-carousel {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 0.7rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+}
+.gallery-track {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-behavior: smooth;
+  scroll-snap-type: inline mandatory;
+  scrollbar-color: rgba(110, 61, 132, 0.45) transparent;
+  scrollbar-width: thin;
+  padding: 0.2rem 0 0.65rem;
 }
 .gallery-item {
-  grid-column: span 4;
+  flex: 0 0 clamp(260px, 43vw, 520px);
+  aspect-ratio: 16 / 9;
+  scroll-snap-align: start;
   overflow: hidden;
-  min-height: 155px;
   border: 1px solid rgba(110, 61, 132, 0.2);
   border-radius: 0.55rem;
   background: #16141a;
   box-shadow: 0 0.5rem 1.5rem rgba(22, 20, 26, 0.08);
-}
-.gallery-item--1,
-.gallery-item--2 {
-  grid-column: span 6;
-  min-height: 240px;
 }
 .gallery-item img {
   display: block;
@@ -598,6 +612,24 @@ dialog#project {
   transform: scale(1.025);
   opacity: 0.92;
 }
+.gallery-arrow {
+  display: grid;
+  place-items: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  padding: 0;
+  border: 1px solid rgba(110, 61, 132, 0.34);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--purple);
+  font: 2rem/1 Georgia, serif;
+  cursor: pointer;
+}
+.gallery-arrow:hover,
+.gallery-arrow:focus-visible {
+  background: #fff;
+  border-color: var(--purple);
+}
 .project-video video {
   display: block;
   width: min(100%, 960px);
@@ -606,31 +638,20 @@ dialog#project {
   background: #16141a;
   box-shadow: 0 0.7rem 1.8rem rgba(22, 20, 26, 0.12);
 }
-.document-download {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-top: 1rem;
+.project-brief {
+  max-width: none;
 }
-.document-download a {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.7rem 1rem;
-  border: 1px solid #6e3d8466;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  color: var(--purple);
-  font-weight: 700;
-  text-decoration: none;
+.brief-pages {
+  display: grid;
+  gap: 1rem;
 }
-.document-download a:hover,
-.document-download a:focus-visible {
+.brief-pages img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(110, 61, 132, 0.18);
   background: #fff;
-  border-color: var(--purple);
-}
-.document-download small {
-  color: var(--soft);
+  box-shadow: 0 0.7rem 1.8rem rgba(22, 20, 26, 0.1);
 }
 @media (max-width: 760px) {
   .map-heading h2,
@@ -644,21 +665,24 @@ dialog#project {
     opacity: 0.22;
     background-position: center;
   }
+  .project--finland::before {
+    height: 520px;
+    background-position: right top;
+    background-size: auto 100%;
+  }
   .project::after {
     background: rgba(247, 244, 236, 0.84);
   }
-  .gallery-grid {
+  .gallery-carousel {
     grid-template-columns: 1fr;
   }
-  .gallery-item,
-  .gallery-item--1,
-  .gallery-item--2 {
-    grid-column: auto;
-    min-height: 0;
-    aspect-ratio: 16 / 9;
+  .gallery-item {
+    flex-basis: 84vw;
   }
-  .document-download {
-    align-items: flex-start;
-    flex-direction: column;
+  .gallery-arrow {
+    display: none;
+  }
+  .brief-pages {
+    gap: 0.65rem;
   }
 }
