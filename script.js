@@ -4,9 +4,24 @@ const P = {
     title: "Portuguese and Finnish Pre-Christian Mythologies",
     sub: "Smartwalk Design in the Metaverse",
     date: "2026 - ongoing",
-    image: "Finland.png",
+    image: "Finland-workshop.png",
+    className: "project--finland",
     copy: "This doctoral research project explores how Portuguese and Finnish pre-Christian mythologies can be interpreted through an educational 3D environment. Participants move through a collaborative metaverse, examine archaeological contexts, test multimodal narrative strategies and design heritage-based smartwalks. The project brings together cultural memory, digital mediation, intermediality and collaborative learning. It approaches the metaverse not as a virtual display case, but as a space for interpretation, experimentation and shared meaning-making.",
+    gallery: [
+      ["finland-gallery-01.png", "Avatar standing in water at sunset in the workshop metaverse"],
+      ["finland-gallery-02.png", "Exterior view of the workshop environment beside the water"],
+      ["finland-gallery-03.png", "Welcome and orientation area inside the workshop metaverse"],
+      ["finland-gallery-04.png", "Narrative and progressive reveal exercise area"],
+      ["finland-gallery-05.png", "Portuguese and Finnish materials and territory context area"],
+      ["finland-gallery-06.png", "Three-dimensional archaeological artefact inside the workshop environment"],
+      ["finland-gallery-07.png", "Teamwork and presentation hub inside the workshop environment"],
+    ],
+    video: "finland-workshop.mp4",
     meta: "<strong>Partners & Academic Context:</strong> Universidade Aberta, University of Minho, UNESCO Chair and UNITWIN Network “The City that Educates and Transforms”, prospective Finnish higher-education partners.",
+    document: [
+      "Download the project brief",
+      "assets/documents/finland-project-brief.docx",
+    ],
   },
   macau: {
     place: "Macau",
@@ -108,7 +123,38 @@ function projectHtml(p) {
   const image = p.image
     ? ` style="--project-image:url('assets/images/project-backgrounds/${p.image}')"`
     : "";
-  return `<article class="project"${image}><p class="kicker">${p.place}</p><p class="date">${p.date}</p><h2>${p.title}</h2><p class="sub">${p.sub}</p><div class="copy"><p>${p.copy}</p></div>${audio}${links}<p class="meta">${p.meta}</p></article>`;
+  const gallery = p.gallery
+    ? `<section class="project-gallery" aria-labelledby="gallery-title">
+        <h3 id="gallery-title">Workshop environment</h3>
+        <div class="gallery-grid">
+          ${p.gallery
+            .map(
+              ([file, alt], index) =>
+                `<a href="assets/images/${file}" target="_blank" rel="noopener" class="gallery-item gallery-item--${index + 1}">
+                  <img src="assets/images/${file}" alt="${alt}" loading="lazy">
+                </a>`,
+            )
+            .join("")}
+        </div>
+      </section>`
+    : "";
+  const video = p.video
+    ? `<section class="project-video" aria-labelledby="video-title">
+        <h3 id="video-title">Workshop walkthrough</h3>
+        <video controls preload="metadata" poster="assets/images/finland-gallery-03.png">
+          <source src="assets/video/${p.video}" type="video/mp4">
+          Your browser does not support embedded video.
+        </video>
+      </section>`
+    : "";
+  const document = p.document
+    ? `<div class="document-download">
+        <a href="${p.document[1]}" download>${p.document[0]} <span aria-hidden="true">↓</span></a>
+        <small>Editable Word document</small>
+      </div>`
+    : "";
+  const className = p.className ? ` ${p.className}` : "";
+  return `<article class="project${className}"${image}><p class="kicker">${p.place}</p><p class="date">${p.date}</p><h2>${p.title}</h2><p class="sub">${p.sub}</p><div class="copy"><p>${p.copy}</p></div>${gallery}${video}${audio}${links}<p class="meta">${p.meta}</p>${document}</article>`;
 }
 document.querySelectorAll("[data-project]").forEach((button) => {
   button.addEventListener("click", () => {
