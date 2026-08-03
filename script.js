@@ -4,7 +4,7 @@ const P = {
     title: "Portuguese and Finnish Pre-Christian Mythologies",
     sub: "Smartwalk Design in the Metaverse",
     date: "2026 - ongoing",
-    image: "Finland-workshop.png",
+    image: "Finland-arrecada.png",
     className: "project--finland",
     copy: "This doctoral research project explores how Portuguese and Finnish pre-Christian mythologies can be interpreted through an educational 3D environment. Participants move through a collaborative metaverse, examine archaeological contexts, test multimodal narrative strategies and design heritage-based smartwalks. The project brings together cultural memory, digital mediation, intermediality and collaborative learning. It approaches the metaverse not as a virtual display case, but as a space for interpretation, experimentation and shared meaning-making.",
     gallery: [
@@ -15,6 +15,7 @@ const P = {
       ["finland-gallery-05.png", "Portuguese and Finnish materials and territory context area"],
       ["finland-gallery-06.png", "Three-dimensional archaeological artefact inside the workshop environment"],
       ["finland-gallery-07.png", "Teamwork and presentation hub inside the workshop environment"],
+      ["arrecada_reconstrucao_3d.glb", "Interactive three-dimensional reconstruction of the Iron Age earring", "model"],
     ],
     video: "finland-workshop.mp4",
     meta: "<strong>Partners & Academic Context:</strong> Universidade Aberta, University of Minho, UNESCO Chair and UNITWIN Network “The City that Educates and Transforms”, prospective Finnish higher-education partners.",
@@ -127,11 +128,23 @@ function projectHtml(p) {
           <button class="gallery-arrow gallery-arrow--previous" type="button" data-gallery-scroll="-1" aria-label="Previous workshop images">‹</button>
           <div class="gallery-track">
             ${p.gallery
-              .map(
-                ([file, alt]) =>
-                  `<a href="assets/images/${file}" target="_blank" rel="noopener" class="gallery-item">
-                    <img src="assets/images/${file}" alt="${alt}" loading="lazy">
-                  </a>`,
+              .map(([file, alt, type]) =>
+                type === "model"
+                  ? `<div class="gallery-item gallery-item--model">
+                      <model-viewer
+                        src="assets/models/${file}"
+                        alt="${alt}"
+                        camera-controls
+                        auto-rotate
+                        shadow-intensity="1.2"
+                        exposure="1.05"
+                        interaction-prompt="auto">
+                      </model-viewer>
+                      <span class="model-hint">Drag to rotate · Scroll or pinch to zoom</span>
+                    </div>`
+                  : `<a href="assets/images/${file}" target="_blank" rel="noopener" class="gallery-item">
+                      <img src="assets/images/${file}" alt="${alt}" loading="lazy">
+                    </a>`,
               )
               .join("")}
           </div>
